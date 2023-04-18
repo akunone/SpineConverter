@@ -12,8 +12,8 @@ namespace Pure01fx.SpineConverter
         public SkeletonHappy(Stream input, Stream output)
         {
             Logger = s => {
-                for (var i = 0; i < level; ++i) Console.Write('\t');
-                Console.WriteLine(s);
+                //for (var i = 0; i < level; ++i) Console.Write('\t');
+                //Console.WriteLine(s);
             };
             r = new SkeletonInput(input, Logger);
             w = new SkeletonOutput(output);
@@ -376,7 +376,7 @@ namespace Pure01fx.SpineConverter
             byte[] buffer = this.chars;
             if (buffer.Length < byteCount) buffer = new byte[byteCount];
             ReadFully(buffer, 0, byteCount);
-            logger(Encoding.UTF8.GetString(buffer, 0, byteCount));
+            //logger(Encoding.UTF8.GetString(buffer, 0, byteCount));
             return Encoding.UTF8.GetString(buffer, 0, byteCount);
         }
 

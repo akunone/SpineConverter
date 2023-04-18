@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Pure01fx.SpineConverter.Bin36ToBin38
 {
@@ -341,18 +342,30 @@ namespace Pure01fx.SpineConverter.Bin36ToBin38
         {
             Console.WriteLine("By: pure01fx <pure01fx@outlook.com>");
             Console.WriteLine("Version: 211108");
-            SkeletonHappy s;
-            Action dispose;
-            if (args.Length > 0) s = SkeletonHappy.FromFile(args[0], out dispose);
+            string rootUrl = "";
+            if (args.Length > 0)
+            {
+                rootUrl = args[0];
+            }
             else
             {
                 Console.Write("Path: ");
-                s = SkeletonHappy.FromFile(Console.ReadLine() ?? throw new Exception("Please provide file"), out dispose);
+                rootUrl = Console.ReadLine() ?? "";
+            }
+            string[] files = Directory.GetFiles(rootUrl, "*.skel", SearchOption.AllDirectories);
+            foreach (string file in files)
+            {
+                Console.WriteLine(file);
+                SkeletonHappy s;
+                Action dispose;
+                s = SkeletonHappy.FromFile(file, out dispose);
+
+                new Worker(s).Work();
+
+                dispose();
             }
 
-            new Worker(s).Work();
 
-            dispose();
         }
     }
 }
